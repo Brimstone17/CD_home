@@ -5,117 +5,850 @@
 <html lang="zh-CN">
   <head>
     <meta charset="utf-8" />
-    <title>主页</title>
-    <style>
+    <title>我的个人主页</title>
+    <style is:global>
       * {
         box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      @font-face {
+        font-family: "MPlus";
+        src: url("/public/fonts/mplus_hzk.ttf") format("truetype");
+        font-display: swap;
       }
 
       body {
-        background: #f0efeb;
-        color: #222;
-        font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
-        padding: 24px;
-        margin: 0;
-        zoom: 0.85;
+        font-family: "MPlus", "宋体", monospace;
+        background: #008080;
+        height: 100vh;
+        overflow: hidden;
+        font-size: 14px;
+        -webkit-font-smoothing: none;
+        font-smooth: never;
+        image-rendering: pixelated;
+        cursor: url("/public/cursors/arrow_m.cur"), auto;
       }
 
-      .container {
-        max-width: 900px;
-        margin: 0 auto;
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
+      body::after {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 9999;
+        background: repeating-linear-gradient(
+          0deg,
+          rgba(0, 0, 0, 0.12) 0px,
+          rgba(0, 0, 0, 0.12) 1px,
+          transparent 1px,
+          transparent 3px
+        );
       }
 
-      .box {
-        border: 5px solid #2b2b2b;
-        background: #f7f5f0;
-        box-shadow: 0 6px 0 rgba(0, 0, 0, 0.15);
-      }
-
-      .box-warning {
-        border-color: #8b0000;
-      }
-
-      .box-header {
-        background: #2b2b2b;
-        color: #fff;
-        font-size: 28px;
-        font-weight: bold;
-        letter-spacing: 2px;
-        text-align: center;
-        padding: 10px 0;
+      .desktop {
+        width: 100%;
+        height: calc(100vh - 36px);
+        padding: 16px;
         position: relative;
       }
 
-      .box-warning .box-header {
-        background: #8b0000;
+      .icons {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        width: 90px;
+      }
+      .icon {
+        width: 90px;
+        height: 90px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 6px;
+        cursor: url("/public/cursors/hand-m.cur"), pointer;
+        color: #fff;
+        text-shadow: 1px 1px 0 #000;
+        font-size: 14px;
+        text-align: center;
+        user-select: none;
+      }
+      .icon.selected {
+        outline: 1px dotted #fff;
+        outline-offset: 2px;
+      }
+      .icon-img {
+        width: 32px;
+        height: 32px;
+        margin-bottom: 6px;
+        image-rendering: pixelated;
       }
 
-      .big-tri {
-        font-size: 60px;
-        margin: 0 8px;
-        vertical-align: middle;
+      .search-box {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        display: flex;
+        gap: 4px;
+        z-index: 50;
+      }
+      .search-box input {
+        background: #fff;
+        border: 2px solid;
+        border-color: #808080 #ffffff #ffffff #808080;
+        padding: 3px 6px;
+        font-family: "MPlus", "宋体", monospace;
+        font-size: 13px;
+        width: 160px;
+        -webkit-font-smoothing: none;
+        font-smooth: never;
+      }
+      .search-box button {
+        background: #c0c0c0;
+        border: 2px solid;
+        border-color: #ffffff #808080 #808080 #ffffff;
+        padding: 3px 10px;
+        font-family: "MPlus", "宋体", monospace;
+        font-size: 13px;
+        cursor: url("/public/cursors/hand-m.cur"), pointer;
+      }
+      .search-box button:active {
+        border-color: #808080 #ffffff #ffffff #808080;
       }
 
-      .box-body {
-        padding: 24px 28px;
-        font-size: 18px;
-        line-height: 1.8;
+      /* ===== 底部图标栏（CD + 记事本） ===== */
+      .bottom-icons {
+        position: absolute;
+        bottom: 16px;
+        left: 16px;
+        display: flex;
+        gap: 12px;
+      }
+      .desktop-icon {
+        width: 90px;
+        height: 90px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 6px;
+        cursor: url("/public/cursors/hand-m.cur"), pointer;
+        color: #fff;
+        text-shadow: 1px 1px 0 #000;
+        font-size: 14px;
+        text-align: center;
+        user-select: none;
+      }
+      .desktop-icon.selected {
+        outline: 1px dotted #fff;
+        outline-offset: 2px;
+      }
+      .desktop-icon .icon-img {
+        width: 40px;
+        height: 40px;
+        margin-bottom: 6px;
+        image-rendering: pixelated;
       }
 
-      .box-body hr {
-        border: none;
-        border-top: 1px solid #bbb;
-        margin: 12px 0;
+      .window {
+        display: none;
+        position: absolute;
+        top: 120px;
+        left: 200px;
+        width: 460px;
+        min-width: 240px;
+        min-height: 120px;
+        background: #c0c0c0;
+        border: 2px solid;
+        border-color: #ffffff #808080 #808080 #ffffff;
+        box-shadow: 3px 3px 0 #000;
+        z-index: 10;
+        overflow: hidden;
+      }
+      .window.active {
+        display: block;
       }
 
-      .lead {
-        font-style: italic;
-      }
-
-      .count {
-        color: #1a5fb4;
+      .title-bar {
+        background: #000080;
+        color: #fff;
+        padding: 4px 6px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 14px;
         font-weight: bold;
-        font-size: 22px;
+        letter-spacing: 1px;
+        cursor: url("/public/cursors/move_m.cur"), move;
+        user-select: none;
+      }
+      .title-bar .title-buttons {
+        display: flex;
+        gap: 2px;
+      }
+      .title-bar button {
+        width: 20px;
+        height: 18px;
+        font-size: 11px;
+        background: #c0c0c0;
+        border: 2px solid;
+        border-color: #ffffff #808080 #808080 #ffffff;
+        cursor: url("/public/cursors/hand-m.cur"), pointer;
+        line-height: 1;
+        padding: 0;
+        color: #000;
+      }
+      .title-bar button:active {
+        border-color: #808080 #ffffff #ffffff #808080;
+      }
+
+      .window-body {
+        padding: 14px;
+        font-size: 14px;
+        line-height: 1.8;
+        color: #000;
+        overflow: auto;
+        height: calc(100% - 28px);
+      }
+      .window-body h2 {
+        font-size: 15px;
+        margin-bottom: 8px;
+      }
+      .window-body a {
+        color: #000080;
+        text-decoration: underline;
+        cursor: url("/public/cursors/hand-m.cur"), pointer;
+      }
+
+      /* ===== 八向调整大小手柄 ===== */
+      .resize-handle {
+        position: absolute;
+        z-index: 5;
+      }
+      .resize-handle.n {
+        top: -4px;
+        left: 8px;
+        right: 8px;
+        height: 8px;
+        cursor: url("/public/cursors/size4_im.cur"), ns-resize;
+      }
+      .resize-handle.s {
+        bottom: -4px;
+        left: 8px;
+        right: 8px;
+        height: 8px;
+        cursor: url("/public/cursors/size4_im.cur"), ns-resize;
+      }
+      .resize-handle.e {
+        right: -4px;
+        top: 8px;
+        bottom: 8px;
+        width: 8px;
+        cursor: url("/public/cursors/size3_im.cur"), ew-resize;
+      }
+      .resize-handle.w {
+        left: -4px;
+        top: 8px;
+        bottom: 8px;
+        width: 8px;
+        cursor: url("/public/cursors/size3_im.cur"), ew-resize;
+      }
+      .resize-handle.ne {
+        top: -4px;
+        right: -4px;
+        width: 12px;
+        height: 12px;
+        cursor: url("/public/cursors/size1_im.cur"), nesw-resize;
+      }
+      .resize-handle.sw {
+        bottom: -4px;
+        left: -4px;
+        width: 12px;
+        height: 12px;
+        cursor: url("/public/cursors/size1_im.cur"), nesw-resize;
+      }
+      .resize-handle.nw {
+        top: -4px;
+        left: -4px;
+        width: 12px;
+        height: 12px;
+        cursor: url("/public/cursors/size2_im.cur"), nwse-resize;
+      }
+      .resize-handle.se {
+        bottom: -4px;
+        right: -4px;
+        width: 12px;
+        height: 12px;
+        cursor: url("/public/cursors/size2_im.cur"), nwse-resize;
+      }
+
+      .taskbar {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 36px;
+        background: #c0c0c0;
+        border-top: 2px solid #ffffff;
+        display: flex;
+        align-items: center;
+        padding: 0 6px;
+        gap: 8px;
+        z-index: 1000;
+      }
+      .start-btn {
+        background: #c0c0c0;
+        border: 2px solid;
+        border-color: #ffffff #808080 #808080 #ffffff;
+        padding: 3px 12px;
+        font-family: "MPlus", "宋体", monospace !important;
+        font-size: 12px;
+        font-weight: bold;
+        cursor: url("/public/cursors/hand-m.cur"), pointer;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        -webkit-font-smoothing: none;
+        font-smooth: never;
+        letter-spacing: 0;
+      }
+      .start-btn:active {
+        border-color: #808080 #ffffff #ffffff #808080;
+      }
+      .start-icon {
+        width: 16px;
+        height: 16px;
+        image-rendering: pixelated;
+      }
+      .taskbar-items {
+        display: flex;
+        gap: 4px;
+        flex: 1;
+      }
+      button.taskbar-item,
+      button.start-btn,
+      .taskbar-item {
+        font-family: "MPlus", "宋体", monospace !important;
+        -webkit-font-smoothing: none !important;
+        font-smooth: never !important;
+        font-size: 12px !important;
+        letter-spacing: 0 !important;
+      }
+      .taskbar-item {
+        background: #c0c0c0;
+        border: 2px solid;
+        border-color: #ffffff #808080 #808080 #ffffff;
+        border-left: 1px solid #dfdfdf;
+        border-right: 1px solid #808080;
+        padding: 3px 12px;
+        cursor: url("/public/cursors/hand-m.cur"), pointer;
+        max-width: 160px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        color: #000;
+      }
+      .taskbar-item:active,
+      .taskbar-item.active {
+        border-color: #808080 #ffffff #ffffff #808080;
+        font-weight: bold;
+        background: #dfdfdf;
+      }
+      .tray {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 0 8px;
+        border-left: 1px solid #808080;
+        border-right: 1px solid #ffffff;
+        height: 28px;
+      }
+      .tray-icon {
+        font-size: 14px;
+      }
+      .clock {
+        background: #c0c0c0;
+        padding: 3px 10px;
+        font-size: 12px;
+        font-family: "MPlus", "宋体", monospace;
+        -webkit-font-smoothing: none;
+        font-smooth: never;
+        border-left: 1px solid #808080;
+        border-right: 1px solid #ffffff;
+      }
+
+      .cd-track {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 4px 6px;
+        cursor: url("/public/cursors/hand-m.cur"), pointer;
+        font-size: 13px;
+      }
+      .cd-track:hover {
+        background: #000080;
+        color: #fff;
+      }
+      .cd-track.active {
+        background: #000080;
+        color: #fff;
+      }
+      .cd-controls {
+        display: flex;
+        gap: 6px;
+        margin-top: 10px;
+      }
+      .cd-controls button {
+        background: #c0c0c0;
+        border: 2px solid;
+        border-color: #ffffff #808080 #808080 #ffffff;
+        padding: 3px 10px;
+        font-family: "MPlus", "宋体", monospace;
+        font-size: 12px;
+        cursor: url("/public/cursors/hand-m.cur"), pointer;
+      }
+      .cd-controls button:active {
+        border-color: #808080 #ffffff #ffffff #808080;
+      }
+
+      input,
+      textarea,
+      [contenteditable] {
+        cursor: url("/public/cursors/beam_1.cur"), text;
+      }
+      .loading,
+      .busy {
+        cursor: url("/public/cursors/busy_m.cur"), wait;
+      }
+      .disabled {
+        cursor: url("/public/cursors/no_m.cur"), not-allowed;
+      }
+      .help {
+        cursor: url("/public/cursors/help_m.cur"), help;
       }
     </style>
   </head>
   <body>
-    <div class="container">
-      <div class="box box-welcome">
-        <div class="box-header">
-          <span class="big-tri">◣</span>
-          WELCOME!
-          <span class="big-tri">◥</span>
+    <div class="desktop">
+      <div class="search-box">
+        <input type="text" id="search-input" placeholder="搜索..." />
+        <button id="search-btn">搜索</button>
+      </div>
+
+      <!-- 左侧图标栏 -->
+      <div class="icons">
+        <div class="icon" data-window="computer">
+          <img
+            class="icon-img"
+            src="/public/icons/computer-4.png"
+            alt="此电脑"
+          />
+          <span>此电脑</span>
         </div>
-        <div class="box-body">
-          <span style="font-size: 26px;">欢迎来到“剧本之外”！</span>
-          <hr />
-          <p>
-            这里是由作者【你的名字】创作的、世界观“你的世界”的官方WIKI。本WIKI上出现的内容均为官方设定，随时间推移或许会更新。
-          </p>
-          <p>网页中的内容可能含有系列游戏剧透，会提前在页面中标出。</p>
-          <p>
-            迄今为止，该WIKI共有 <span class="count">0</span> 个页面！哇哦！
-          </p>
+        <div class="icon" data-window="files">
+          <img
+            class="icon-img"
+            src="/public/icons/directory_closed-4.png"
+            alt="资料"
+          />
+          <span>资料</span>
+        </div>
+        <div class="icon" data-window="browser">
+          <img
+            class="icon-img"
+            src="/public/icons/msie1-2.png"
+            alt="其他网站"
+          />
+          <span>其他网站</span>
         </div>
       </div>
 
-      <div class="box box-warning">
-        <div class="box-header">
-          <span class="big-tri">◣</span>
-          WARNING!
-          <span class="big-tri">◥</span>
+      <!-- 底部图标栏：CD + 记事本 -->
+      <div class="bottom-icons">
+        <div class="desktop-icon" data-window="cd">
+          <img
+            class="icon-img"
+            src="/public/icons/cd_audio_cd_a-4.png"
+            alt="CD"
+          />
+          <span>CD</span>
         </div>
-        <div class="box-body">
-          <p class="lead">嘟……嘟……该页面尚在搭建中，请稍后再拨。</p>
-          <p>
-            预计下次翻新WIKI，时间：待定。好消息：游戏剧本要重写了！坏消息：还没开始写，怎么办呢。
-          </p>
+        <div class="desktop-icon">
+          <img
+            class="icon-img"
+            src="/public/icons/notepad-2.png"
+            alt="记事本"
+          />
+          <span>记事本</span>
         </div>
       </div>
+
+      <!-- 窗口 -->
+      <div class="window" id="window-computer" style="top: 100px; left: 180px;">
+        <div class="title-bar">
+          <span>💻 此电脑</span>
+          <div class="title-buttons">
+            <button data-action="minimize">_</button>
+            <button data-action="maximize">□</button>
+            <button data-action="close">×</button>
+          </div>
+        </div>
+        <div class="window-body">
+          <h2>关于我</h2>
+          <p>你好，我是【你的名字】。</p>
+          <p>这里写一句话介绍你自己。</p>
+        </div>
+        <div class="resize-handle n"></div>
+        <div class="resize-handle s"></div>
+        <div class="resize-handle e"></div>
+        <div class="resize-handle w"></div>
+        <div class="resize-handle ne"></div>
+        <div class="resize-handle nw"></div>
+        <div class="resize-handle se"></div>
+        <div class="resize-handle sw"></div>
+      </div>
+
+      <div class="window" id="window-files" style="top: 140px; left: 240px;">
+        <div class="title-bar">
+          <span>📁 资料</span>
+          <div class="title-buttons">
+            <button data-action="minimize">_</button>
+            <button data-action="maximize">□</button>
+            <button data-action="close">×</button>
+          </div>
+        </div>
+        <div class="window-body">
+          <h2>我的作品</h2>
+          <p><a href="#">作品一</a></p>
+          <p><a href="#">作品二</a></p>
+          <p><a href="#">作品三</a></p>
+        </div>
+        <div class="resize-handle n"></div>
+        <div class="resize-handle s"></div>
+        <div class="resize-handle e"></div>
+        <div class="resize-handle w"></div>
+        <div class="resize-handle ne"></div>
+        <div class="resize-handle nw"></div>
+        <div class="resize-handle se"></div>
+        <div class="resize-handle sw"></div>
+      </div>
+
+      <div class="window" id="window-browser" style="top: 180px; left: 300px;">
+        <div class="title-bar">
+          <span>🌐 其他网站</span>
+          <div class="title-buttons">
+            <button data-action="minimize">_</button>
+            <button data-action="maximize">□</button>
+            <button data-action="close">×</button>
+          </div>
+        </div>
+        <div class="window-body">
+          <h2>友情链接</h2>
+          <p><a href="#">微博</a></p>
+          <p><a href="#">B站</a></p>
+          <p><a href="#">邮箱</a></p>
+        </div>
+        <div class="resize-handle n"></div>
+        <div class="resize-handle s"></div>
+        <div class="resize-handle e"></div>
+        <div class="resize-handle w"></div>
+        <div class="resize-handle ne"></div>
+        <div class="resize-handle nw"></div>
+        <div class="resize-handle se"></div>
+        <div class="resize-handle sw"></div>
+      </div>
+
+      <div
+        class="window"
+        id="window-cd"
+        style="top: 200px; left: 360px; width: 360px;"
+      >
+        <div class="title-bar">
+          <span>💿 CD 播放器</span>
+          <div class="title-buttons">
+            <button data-action="minimize">_</button>
+            <button data-action="maximize">□</button>
+            <button data-action="close">×</button>
+          </div>
+        </div>
+        <div class="window-body">
+          <h2>曲目列表</h2>
+          <div id="cd-tracks">
+            <div class="cd-track" data-src="/public/music/track1.mp3">
+              01. 曲目一
+            </div>
+            <div class="cd-track" data-src="/public/music/track2.mp3">
+              02. 曲目二
+            </div>
+            <div class="cd-track" data-src="/public/music/track3.mp3">
+              03. 曲目三
+            </div>
+          </div>
+          <div class="cd-controls">
+            <button id="cd-play">▶ 播放</button>
+            <button id="cd-pause">⏸ 暂停</button>
+            <button id="cd-stop">⏹ 停止</button>
+          </div>
+          <audio id="cd-audio"></audio>
+        </div>
+        <div class="resize-handle n"></div>
+        <div class="resize-handle s"></div>
+        <div class="resize-handle e"></div>
+        <div class="resize-handle w"></div>
+        <div class="resize-handle ne"></div>
+        <div class="resize-handle nw"></div>
+        <div class="resize-handle se"></div>
+        <div class="resize-handle sw"></div>
+      </div>
     </div>
+
+    <div class="taskbar">
+      <button class="start-btn">
+        <img src="/public/icons/windows-0.png" class="start-icon" alt="开始" />
+        开始
+      </button>
+      <div class="taskbar-items" id="taskbar-items"></div>
+      <div class="tray">
+        <span class="tray-icon">🔊</span>
+      </div>
+      <div class="clock" id="clock">--:--</div>
+    </div>
+
+    <script is:inline>
+      var taskbarItems = document.getElementById("taskbar-items");
+      var openWindows = {};
+
+      document
+        .querySelectorAll(".icon, .desktop-icon")
+        .forEach(function (icon) {
+          icon.addEventListener("dblclick", function () {
+            var id = icon.dataset.window;
+            if (!id) return;
+            var win = document.getElementById("window-" + id);
+            if (!win) return;
+            if (!openWindows[win.id]) {
+              addTaskbarItem(win);
+            }
+            activateWindow(win);
+          });
+          icon.addEventListener("click", function () {
+            document
+              .querySelectorAll(".icon, .desktop-icon")
+              .forEach(function (i) {
+                i.classList.remove("selected");
+              });
+            icon.classList.add("selected");
+          });
+        });
+
+      document
+        .querySelector(".desktop")
+        .addEventListener("click", function (e) {
+          if (e.target.classList.contains("desktop")) {
+            document
+              .querySelectorAll(".icon, .desktop-icon")
+              .forEach(function (i) {
+                i.classList.remove("selected");
+              });
+          }
+        });
+
+      function activateWindow(win) {
+        document.querySelectorAll(".window").forEach(function (w) {
+          w.style.zIndex = 10;
+        });
+        win.classList.add("active");
+        win.style.zIndex = 100;
+        document.querySelectorAll(".taskbar-item").forEach(function (item) {
+          item.classList.remove("active");
+        });
+        if (openWindows[win.id]) {
+          openWindows[win.id].classList.add("active");
+        }
+      }
+
+      function addTaskbarItem(win) {
+        var btn = document.createElement("button");
+        btn.className = "taskbar-item active";
+        btn.textContent = win.querySelector(".title-bar span").textContent;
+        btn.addEventListener("click", function () {
+          activateWindow(win);
+        });
+        taskbarItems.appendChild(btn);
+        openWindows[win.id] = btn;
+      }
+
+      function removeTaskbarItem(win) {
+        if (openWindows[win.id]) {
+          openWindows[win.id].remove();
+          delete openWindows[win.id];
+        }
+      }
+
+      document.querySelectorAll(".title-bar button").forEach(function (btn) {
+        btn.addEventListener("click", function (e) {
+          e.stopPropagation();
+          var win = e.target.closest(".window");
+          var action = btn.dataset.action;
+
+          if (action === "close") {
+            win.classList.remove("active");
+            removeTaskbarItem(win);
+          } else if (action === "minimize") {
+            win.classList.remove("active");
+            if (openWindows[win.id]) {
+              openWindows[win.id].classList.remove("active");
+            }
+          } else if (action === "maximize") {
+            if (win.dataset.maximized === "true") {
+              win.style.width = win.dataset.oldWidth;
+              win.style.height = win.dataset.oldHeight;
+              win.style.left = win.dataset.oldLeft;
+              win.style.top = win.dataset.oldTop;
+              win.dataset.maximized = "false";
+            } else {
+              win.dataset.oldWidth = win.style.width;
+              win.dataset.oldHeight = win.style.height;
+              win.dataset.oldLeft = win.style.left;
+              win.dataset.oldTop = win.style.top;
+              win.style.width = "100%";
+              win.style.height = "calc(100vh - 36px)";
+              win.style.left = "0";
+              win.style.top = "0";
+              win.dataset.maximized = "true";
+            }
+          }
+        });
+      });
+
+      function updateClock() {
+        var now = new Date();
+        var h = String(now.getHours()).padStart(2, "0");
+        var m = String(now.getMinutes()).padStart(2, "0");
+        var clock = document.getElementById("clock");
+        if (clock)
+          clock.textContent =
+            h + ":" + m + " " + (now.getMonth() + 1) + "/" + now.getDate();
+      }
+      updateClock();
+      setInterval(updateClock, 1000);
+
+      document.querySelectorAll(".window").forEach(function (win) {
+        var titleBar = win.querySelector(".title-bar");
+        var isDragging = false;
+        var offsetX = 0,
+          offsetY = 0;
+
+        titleBar.addEventListener("mousedown", function (e) {
+          if (win.dataset.maximized === "true") return;
+          e.preventDefault();
+          isDragging = true;
+          offsetX = e.clientX - win.offsetLeft;
+          offsetY = e.clientY - win.offsetTop;
+          activateWindow(win);
+        });
+
+        document.addEventListener("mousemove", function (e) {
+          if (!isDragging) return;
+          win.style.left = e.clientX - offsetX + "px";
+          win.style.top = e.clientY - offsetY + "px";
+        });
+
+        document.addEventListener("mouseup", function () {
+          isDragging = false;
+        });
+      });
+
+      document.querySelectorAll(".resize-handle").forEach(function (handle) {
+        var win = handle.closest(".window");
+        var dir = handle.classList[1];
+        var isResizing = false;
+        var startX = 0,
+          startY = 0;
+        var startW = 0,
+          startH = 0,
+          startL = 0,
+          startT = 0;
+
+        handle.addEventListener("mousedown", function (e) {
+          e.stopPropagation();
+          e.preventDefault();
+          isResizing = true;
+          startX = e.clientX;
+          startY = e.clientY;
+          startW = win.offsetWidth;
+          startH = win.offsetHeight;
+          startL = win.offsetLeft;
+          startT = win.offsetTop;
+          activateWindow(win);
+        });
+
+        document.addEventListener("mousemove", function (e) {
+          if (!isResizing) return;
+          var dx = e.clientX - startX;
+          var dy = e.clientY - startY;
+
+          if (dir.indexOf("e") !== -1) win.style.width = startW + dx + "px";
+          if (dir.indexOf("s") !== -1) win.style.height = startH + dy + "px";
+          if (dir.indexOf("w") !== -1) {
+            win.style.width = startW - dx + "px";
+            win.style.left = startL + dx + "px";
+          }
+          if (dir.indexOf("n") !== -1) {
+            win.style.height = startH - dy + "px";
+            win.style.top = startT + dy + "px";
+          }
+        });
+
+        document.addEventListener("mouseup", function () {
+          isResizing = false;
+        });
+      });
+
+      var cdAudio = document.getElementById("cd-audio");
+      document.querySelectorAll(".cd-track").forEach(function (track) {
+        track.addEventListener("dblclick", function () {
+          document.querySelectorAll(".cd-track").forEach(function (t) {
+            t.classList.remove("active");
+          });
+          track.classList.add("active");
+          cdAudio.src = track.dataset.src;
+          cdAudio.play();
+        });
+      });
+      document.getElementById("cd-play").addEventListener("click", function () {
+        if (cdAudio.src) cdAudio.play();
+      });
+      document
+        .getElementById("cd-pause")
+        .addEventListener("click", function () {
+          cdAudio.pause();
+        });
+      document.getElementById("cd-stop").addEventListener("click", function () {
+        cdAudio.pause();
+        cdAudio.currentTime = 0;
+      });
+
+      document
+        .getElementById("search-btn")
+        .addEventListener("click", function () {
+          var keyword = document.getElementById("search-input").value.trim();
+          if (!keyword) return;
+          document.querySelectorAll("mark.search-hit").forEach(function (m) {
+            m.outerHTML = m.innerHTML;
+          });
+          document.querySelectorAll(".window-body").forEach(function (body) {
+            if (body.innerHTML.indexOf(keyword) !== -1) {
+              body.innerHTML = body.innerHTML.replace(
+                new RegExp(keyword, "g"),
+                '<mark class="search-hit" style="background:#ff0;color:#000;">' +
+                  keyword +
+                  "</mark>",
+              );
+            }
+          });
+        });
+    </script>
   </body>
 </html>
