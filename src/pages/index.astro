@@ -15,7 +15,7 @@
 
       @font-face {
         font-family: "MPlus";
-        src: url("/public/fonts/mplus_hzk.ttf") format("truetype");
+        src: url("/fonts/mplus_hzk.ttf") format("truetype");
         font-display: swap;
       }
 
@@ -28,7 +28,7 @@
         -webkit-font-smoothing: none;
         font-smooth: never;
         image-rendering: pixelated;
-        cursor: url("/public/cursors/arrow_m.cur"), auto;
+        cursor: url("/cursors/arrow_m.cur"), auto;
       }
 
       body::after {
@@ -67,7 +67,7 @@
         justify-content: center;
         align-items: center;
         padding: 6px;
-        cursor: url("/public/cursors/hand-m.cur"), pointer;
+        cursor: url("/cursors/hand-m.cur"), pointer;
         color: #fff;
         text-shadow: 1px 1px 0 #000;
         font-size: 14px;
@@ -111,13 +111,12 @@
         padding: 3px 10px;
         font-family: "MPlus", "宋体", monospace;
         font-size: 13px;
-        cursor: url("/public/cursors/hand-m.cur"), pointer;
+        cursor: url("/cursors/hand-m.cur"), pointer;
       }
       .search-box button:active {
         border-color: #808080 #ffffff #ffffff #808080;
       }
 
-      /* ===== 底部图标栏（CD + 记事本） ===== */
       .bottom-icons {
         position: absolute;
         bottom: 16px;
@@ -133,7 +132,7 @@
         justify-content: center;
         align-items: center;
         padding: 6px;
-        cursor: url("/public/cursors/hand-m.cur"), pointer;
+        cursor: url("/cursors/hand-m.cur"), pointer;
         color: #fff;
         text-shadow: 1px 1px 0 #000;
         font-size: 14px;
@@ -180,7 +179,7 @@
         font-size: 14px;
         font-weight: bold;
         letter-spacing: 1px;
-        cursor: url("/public/cursors/move_m.cur"), move;
+        cursor: url("/cursors/move_m.cur"), move;
         user-select: none;
       }
       .title-bar .title-buttons {
@@ -194,7 +193,7 @@
         background: #c0c0c0;
         border: 2px solid;
         border-color: #ffffff #808080 #808080 #ffffff;
-        cursor: url("/public/cursors/hand-m.cur"), pointer;
+        cursor: url("/cursors/hand-m.cur"), pointer;
         line-height: 1;
         padding: 0;
         color: #000;
@@ -218,10 +217,9 @@
       .window-body a {
         color: #000080;
         text-decoration: underline;
-        cursor: url("/public/cursors/hand-m.cur"), pointer;
+        cursor: url("/cursors/hand-m.cur"), pointer;
       }
 
-      /* ===== 八向调整大小手柄 ===== */
       .resize-handle {
         position: absolute;
         z-index: 5;
@@ -231,56 +229,56 @@
         left: 8px;
         right: 8px;
         height: 8px;
-        cursor: url("/public/cursors/size4_im.cur"), ns-resize;
+        cursor: url("/cursors/size4_im.cur"), ns-resize;
       }
       .resize-handle.s {
         bottom: -4px;
         left: 8px;
         right: 8px;
         height: 8px;
-        cursor: url("/public/cursors/size4_im.cur"), ns-resize;
+        cursor: url("/cursors/size4_im.cur"), ns-resize;
       }
       .resize-handle.e {
         right: -4px;
         top: 8px;
         bottom: 8px;
         width: 8px;
-        cursor: url("/public/cursors/size3_im.cur"), ew-resize;
+        cursor: url("/cursors/size3_im.cur"), ew-resize;
       }
       .resize-handle.w {
         left: -4px;
         top: 8px;
         bottom: 8px;
         width: 8px;
-        cursor: url("/public/cursors/size3_im.cur"), ew-resize;
+        cursor: url("/cursors/size3_im.cur"), ew-resize;
       }
       .resize-handle.ne {
         top: -4px;
         right: -4px;
         width: 12px;
         height: 12px;
-        cursor: url("/public/cursors/size1_im.cur"), nesw-resize;
+        cursor: url("/cursors/size1_im.cur"), nesw-resize;
       }
       .resize-handle.sw {
         bottom: -4px;
         left: -4px;
         width: 12px;
         height: 12px;
-        cursor: url("/public/cursors/size1_im.cur"), nesw-resize;
+        cursor: url("/cursors/size1_im.cur"), nesw-resize;
       }
       .resize-handle.nw {
         top: -4px;
         left: -4px;
         width: 12px;
         height: 12px;
-        cursor: url("/public/cursors/size2_im.cur"), nwse-resize;
+        cursor: url("/cursors/size2_im.cur"), nwse-resize;
       }
       .resize-handle.se {
         bottom: -4px;
         right: -4px;
         width: 12px;
         height: 12px;
-        cursor: url("/public/cursors/size2_im.cur"), nwse-resize;
+        cursor: url("/cursors/size2_im.cur"), nwse-resize;
       }
 
       .taskbar {
@@ -305,7 +303,7 @@
         font-family: "MPlus", "宋体", monospace !important;
         font-size: 12px;
         font-weight: bold;
-        cursor: url("/public/cursors/hand-m.cur"), pointer;
+        cursor: url("/cursors/hand-m.cur"), pointer;
         display: flex;
         align-items: center;
         gap: 6px;
@@ -342,7 +340,7 @@
         border-left: 1px solid #dfdfdf;
         border-right: 1px solid #808080;
         padding: 3px 12px;
-        cursor: url("/public/cursors/hand-m.cur"), pointer;
+        cursor: url("/cursors/hand-m.cur"), pointer;
         max-width: 160px;
         overflow: hidden;
         white-space: nowrap;
@@ -383,7 +381,7 @@
         justify-content: space-between;
         align-items: center;
         padding: 4px 6px;
-        cursor: url("/public/cursors/hand-m.cur"), pointer;
+        cursor: url("/cursors/hand-m.cur"), pointer;
         font-size: 13px;
       }
       .cd-track:hover {
@@ -406,7 +404,7 @@
         padding: 3px 10px;
         font-family: "MPlus", "宋体", monospace;
         font-size: 12px;
-        cursor: url("/public/cursors/hand-m.cur"), pointer;
+        cursor: url("/cursors/hand-m.cur"), pointer;
       }
       .cd-controls button:active {
         border-color: #808080 #ffffff #ffffff #808080;
@@ -415,17 +413,17 @@
       input,
       textarea,
       [contenteditable] {
-        cursor: url("/public/cursors/beam_1.cur"), text;
+        cursor: url("/cursors/beam_1.cur"), text;
       }
       .loading,
       .busy {
-        cursor: url("/public/cursors/busy_m.cur"), wait;
+        cursor: url("/cursors/busy_m.cur"), wait;
       }
       .disabled {
-        cursor: url("/public/cursors/no_m.cur"), not-allowed;
+        cursor: url("/cursors/no_m.cur"), not-allowed;
       }
       .help {
-        cursor: url("/public/cursors/help_m.cur"), help;
+        cursor: url("/cursors/help_m.cur"), help;
       }
     </style>
   </head>
@@ -436,55 +434,36 @@
         <button id="search-btn">搜索</button>
       </div>
 
-      <!-- 左侧图标栏 -->
       <div class="icons">
         <div class="icon" data-window="computer">
-          <img
-            class="icon-img"
-            src="/public/icons/computer-4.png"
-            alt="此电脑"
-          />
+          <img class="icon-img" src="/icons/computer-4.png" alt="此电脑" />
           <span>此电脑</span>
         </div>
         <div class="icon" data-window="files">
           <img
             class="icon-img"
-            src="/public/icons/directory_closed-4.png"
+            src="/icons/directory_closed-4.png"
             alt="资料"
           />
           <span>资料</span>
         </div>
         <div class="icon" data-window="browser">
-          <img
-            class="icon-img"
-            src="/public/icons/msie1-2.png"
-            alt="其他网站"
-          />
+          <img class="icon-img" src="/icons/msie1-2.png" alt="其他网站" />
           <span>其他网站</span>
         </div>
       </div>
 
-      <!-- 底部图标栏：CD + 记事本 -->
       <div class="bottom-icons">
         <div class="desktop-icon" data-window="cd">
-          <img
-            class="icon-img"
-            src="/public/icons/cd_audio_cd_a-4.png"
-            alt="CD"
-          />
+          <img class="icon-img" src="/icons/cd_audio_cd_a-4.png" alt="CD" />
           <span>CD</span>
         </div>
         <div class="desktop-icon">
-          <img
-            class="icon-img"
-            src="/public/icons/notepad-2.png"
-            alt="记事本"
-          />
+          <img class="icon-img" src="/icons/notepad-2.png" alt="记事本" />
           <span>记事本</span>
         </div>
       </div>
 
-      <!-- 窗口 -->
       <div class="window" id="window-computer" style="top: 100px; left: 180px;">
         <div class="title-bar">
           <span>💻 此电脑</span>
@@ -575,15 +554,9 @@
         <div class="window-body">
           <h2>曲目列表</h2>
           <div id="cd-tracks">
-            <div class="cd-track" data-src="/public/music/track1.mp3">
-              01. 曲目一
-            </div>
-            <div class="cd-track" data-src="/public/music/track2.mp3">
-              02. 曲目二
-            </div>
-            <div class="cd-track" data-src="/public/music/track3.mp3">
-              03. 曲目三
-            </div>
+            <div class="cd-track" data-src="/music/track1.mp3">01. 曲目一</div>
+            <div class="cd-track" data-src="/music/track2.mp3">02. 曲目二</div>
+            <div class="cd-track" data-src="/music/track3.mp3">03. 曲目三</div>
           </div>
           <div class="cd-controls">
             <button id="cd-play">▶ 播放</button>
@@ -605,7 +578,7 @@
 
     <div class="taskbar">
       <button class="start-btn">
-        <img src="/public/icons/windows-0.png" class="start-icon" alt="开始" />
+        <img src="/icons/windows-0.png" class="start-icon" alt="开始" />
         开始
       </button>
       <div class="taskbar-items" id="taskbar-items"></div>
