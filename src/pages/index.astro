@@ -2,16 +2,120 @@
 
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>泥嚎！</h1>
-	</body>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <title>主页</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        background: #f0efeb;
+        color: #222;
+        font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+        padding: 24px;
+        margin: 0;
+        zoom: 0.85;
+      }
+
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .box {
+        border: 5px solid #2b2b2b;
+        background: #f7f5f0;
+        box-shadow: 0 6px 0 rgba(0, 0, 0, 0.15);
+      }
+
+      .box-warning {
+        border-color: #8b0000;
+      }
+
+      .box-header {
+        background: #2b2b2b;
+        color: #fff;
+        font-size: 28px;
+        font-weight: bold;
+        letter-spacing: 2px;
+        text-align: center;
+        padding: 10px 0;
+        position: relative;
+      }
+
+      .box-warning .box-header {
+        background: #8b0000;
+      }
+
+      .big-tri {
+        font-size: 60px;
+        margin: 0 8px;
+        vertical-align: middle;
+      }
+
+      .box-body {
+        padding: 24px 28px;
+        font-size: 18px;
+        line-height: 1.8;
+      }
+
+      .box-body hr {
+        border: none;
+        border-top: 1px solid #bbb;
+        margin: 12px 0;
+      }
+
+      .lead {
+        font-style: italic;
+      }
+
+      .count {
+        color: #1a5fb4;
+        font-weight: bold;
+        font-size: 22px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="box box-welcome">
+        <div class="box-header">
+          <span class="big-tri">◣</span>
+          WELCOME!
+          <span class="big-tri">◥</span>
+        </div>
+        <div class="box-body">
+          <span style="font-size: 26px;">欢迎来到“剧本之外”！</span>
+          <hr />
+          <p>
+            这里是由作者【你的名字】创作的、世界观“你的世界”的官方WIKI。本WIKI上出现的内容均为官方设定，随时间推移或许会更新。
+          </p>
+          <p>网页中的内容可能含有系列游戏剧透，会提前在页面中标出。</p>
+          <p>
+            迄今为止，该WIKI共有 <span class="count">0</span> 个页面！哇哦！
+          </p>
+        </div>
+      </div>
+
+      <div class="box box-warning">
+        <div class="box-header">
+          <span class="big-tri">◣</span>
+          WARNING!
+          <span class="big-tri">◥</span>
+        </div>
+        <div class="box-body">
+          <p class="lead">嘟……嘟……该页面尚在搭建中，请稍后再拨。</p>
+          <p>
+            预计下次翻新WIKI，时间：待定。好消息：游戏剧本要重写了！坏消息：还没开始写，怎么办呢。
+          </p>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>
